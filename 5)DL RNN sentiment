@@ -1,0 +1,48 @@
+5) RNN Sentiment Analysis
+
+
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Embedding, GlobalAveragePooling1D
+from tensorflow.keras.datasets import imdb
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+
+max_words = 10000
+max_len = 200
+
+(X_train, y_train), (X_test, y_test) = imdb.load_data(num_words=max_words)
+X_train = pad_sequences(X_train, maxlen=max_len)
+X_test = pad_sequences(X_test, maxlen=max_len)
+
+model = Sequential([
+    Embedding(input_dim=max_words, output_dim=128, input_length=max_len),
+    GlobalAveragePooling1D(),
+    Dense(64, activation='relu'),
+    Dense(1, activation='sigmoid')
+])
+
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+print("Training the model...")
+model.fit(X_train, y_train, epochs=10, batch_size=64, validation_data=(X_test, y_test))
+
+print("\nEvaluating the model...")
+test_loss, test_accuracy = model.evaluate(X_test, y_test)
+print(f"\nTest Accuracy: {test_accuracy * 100:.2f}%")
+
+word_index = imdb.get_word_index()
+reverse_word_index = {value: key for key, value in word_index.items()}
+
+def decode_review(encoded_review):
+    return " ".join([reverse_word_index.get(i - 3, "?") for i in encoded_review])
+
+print("\nPredicting sentiments for sample reviews...")
+predictions = model.predict(X_test[:5])
+for i, pred in enumerate(predictions):
+    decoded_review = decode_review(X_test[i])
+    sentiment = "Positive" if pred >= 0.5 else "Negative"
+    actual_sentiment = "Positive" if y_test[i] == 1 else "Negative"
+    print(f"\nReview {i+1}:")
+    print(f"Text: {decoded_review}")
+    print(f"Predicted Sentiment: {sentiment}, Actual Label: {actual_sentiment}")

@@ -1,0 +1,88 @@
+4)pipeline virtual
+
+1)ML Create repo 
+
+
+1. Create a GitHub Repository
+Go to GitHub
+
+Click New Repository
+
+Name it, e.g., mlops-practical-assignment
+
+Initialize with a README ✔️
+
+
+2. Clone the Repository to Local
+
+
+3. Move into the Project Folder
+
+cd mlops-practical-assignment
+
+# python -m venv venv
+# # For Windows PowerShell:
+.\venv\Scripts\Activate
+
+
+
+# file name ml_pipeline.ipynb
+
+# Import Libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_wine
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+
+# Load the Wine Dataset
+wine = load_wine()
+df = pd.DataFrame(wine.data, columns=wine.feature_names)
+df['target'] = wine.target
+
+# Check first 5 rows
+df.head()
+
+# Data Preprocessing (no missing values in wine dataset, so simple split)
+X = df[wine.feature_names]
+y = df['target']
+
+# Train-Test Split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Model Training
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Prediction and Accuracy
+y_pred = model.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+
+print(f"Model Accuracy: {accuracy:.2f}")
+
+# Simple Visualization
+plt.figure(figsize=(8,6))
+plt.barh(wine.feature_names, model.feature_importances_)
+plt.xlabel('Feature Importance')
+plt.title('Feature Importance in Wine Dataset')
+plt.show()
+
+
+
+// pip freeze > requirements.txt
+//git commands
+git add ml_pipeline.ipynb requirements.txt
+git commit -m "Added Jupyter notebook for ML pipeline and environment file"
+git push
+
+
+// who are  you error fix ?
+
+git config --global user.name "takaw"
+git config --global user.email "takaw123@gmail.com"
+
+git add .
+git commit -m "Initial commit - added iris dataset"
+git push -u origin main
+

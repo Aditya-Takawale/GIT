@@ -1,0 +1,126 @@
+5)EDA Report
+
+1)ML Create repo 
+
+
+1. Create a GitHub Repository
+Go to GitHub
+
+Click New Repository
+
+Name it, e.g., mlops-practical-assignment
+
+Initialize with a README ✔️
+
+
+2. Clone the Repository to Local
+
+
+3. Move into the Project Folder
+
+cd mlops-practical-assignment
+
+# python -m venv venv
+# # For Windows PowerShell:
+.\venv\Scripts\Activate
+
+
+# file name eda_titanic.ipynb
+
+# Import Libraries
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load Titanic dataset from seaborn
+df = sns.load_dataset('titanic')
+
+# Display first few rows
+df.head()
+
+# Check Data Info
+df.info()
+
+# Check for Null Values
+df.isnull().sum()
+
+# Handle Missing Data (optional - here just view it)
+# For EDA, it's enough to know where missing values exist.
+
+# Visualize Missing Data (Optional)
+import missingno as msno
+msno.matrix(df)
+plt.show()
+
+# Basic Statistics
+df.describe()
+
+# Univariate Analysis
+plt.figure(figsize=(8,6))
+sns.countplot(x='sex', data=df)
+plt.title('Gender Distribution')
+plt.show()
+
+plt.figure(figsize=(8,6))
+sns.countplot(x='class', data=df)
+plt.title('Passenger Class Distribution')
+plt.show()
+
+# Bivariate Analysis
+plt.figure(figsize=(8,6))
+sns.barplot(x='sex', y='survived', data=df)
+plt.title('Survival Rate by Gender')
+plt.show()
+
+plt.figure(figsize=(8,6))
+sns.barplot(x='class', y='survived', data=df)
+plt.title('Survival Rate by Class')
+plt.show()
+
+# Correlation Heatmap
+plt.figure(figsize=(10,8))
+sns.heatmap(df.corr(), annot=True, cmap='coolwarm')
+plt.title('Feature Correlation')
+plt.show()
+
+# Outliers detection (boxplot example)
+plt.figure(figsize=(8,6))
+sns.boxplot(x='age', data=df)
+plt.title('Age Outliers')
+plt.show()
+
+
+
+//pip install seaborn missingno
+
+
+//Step 4: Export EDA as PDF Report
+After running your Jupyter Notebook:
+
+In VS Code or Jupyter Notebook,
+click:
+
+File ➔ Export Notebook As ➔ Export as PDF
+
+It will generate a file like:
+
+👉 eda_titanic.pdf
+
+
+//git commands
+git add eda_titanic.ipynb eda_titanic.pdf
+git commit -m "Added Titanic dataset EDA notebook and PDF report"
+git push
+
+
+// who are  you error fix ?
+
+git config --global user.name "takaw"
+git config --global user.email "takaw123@gmail.com"
+
+git add .
+git commit -m "Initial commit - added iris dataset"
+git push -u origin main
+
+
+

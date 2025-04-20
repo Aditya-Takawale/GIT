@@ -1,0 +1,54 @@
+1)ML Create repo 
+
+
+
+1. Create a GitHub Repository
+Go to GitHub
+
+Click New Repository
+
+Name it, e.g., mlops-practical-assignment
+
+Initialize with a README ✔️
+
+
+2. Clone the Repository to Local
+
+
+3. Move into the Project Folder
+
+cd mlops-practical-assignment
+
+
+4. Create/Copy your Dataset File
+Make sure dataset.csv is placed inside this folder.
+
+
+5. Add the File to Git
+
+git add dataset.csv
+
+
+
+6. Commit the Change
+
+git commit -m "Added dataset.csv file"
+
+
+7. Push to GitHub
+
+git push
+
+
+
+// who are  you error fix ?
+
+git config --global user.name "takaw"
+git config --global user.email "takaw123@gmail.com"
+
+git add .
+git commit -m "Initial commit - added iris dataset"
+git push -u origin main
+    
+
+

@@ -1,0 +1,36 @@
+7) LSTM
+
+import numpy as np
+import tensorflow as tf
+import matplotlib.pyplot as plt
+
+data = np.sin(np.arange(100) * 0.1)
+
+X, y = [], []
+for i in range(len(data) - 10):
+    X.append(data[i:i+10])
+    y.append(data[i+10])
+
+X, y = np.array(X), np.array(y)
+X = X.reshape(-1, 10, 1)
+
+model = tf.keras.Sequential([
+    tf.keras.layers.LSTM(20, input_shape=(10, 1)),
+    tf.keras.layers.Dense(1)
+])
+model.compile(optimizer="adam", loss="mse")
+model.fit(X, y, epochs=10, verbose=0)
+
+# Predict next 10 values
+preds = []
+seq = X[-1].flatten()
+for _ in range(10):
+    pred = model.predict(seq.reshape(1, 10, 1), verbose=0)[0, 0]
+    preds.append(pred)
+    seq = np.roll(seq, -1)
+    seq[-1] = pred
+
+plt.plot(data, label="Actual")
+plt.plot(range(90, 100), preds, 'ro-', label="Predicted")
+plt.legend()
+plt.show()
